@@ -1,0 +1,13 @@
+// Dot files
+.opt-in
+.vscode
+
+// Logs
+*.log
+npm-debug.log.*
+
+// Folders / Files
+node_modules
+coverage
+dist
+config/surge
