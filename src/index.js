@@ -1,22 +1,28 @@
 import React from 'react' // eslint-disable-line no-unused-vars
 import { render } from 'react-dom'
+import { browserHistory } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
 import { AppContainer } from 'react-hot-loader'  // eslint-disable-line no-unused-vars
-import App from './containers/App'
+import Root from './containers/Root'
+import configureStore from './store/configureStore'
+
+const store = configureStore()
+const history = syncHistoryWithStore(browserHistory, store)
 
 const renderApp = (Component) => {
   render(
     <AppContainer>
-      <Component />
+      <Component store={store} history={history} />
     </AppContainer>,
     document.getElementById('appRoot')
   )
 }
 
-renderApp(App)
+renderApp(Root)
 
 if (module.hot) {
-  module.hot.accept('./containers/App.js', () => {
-    renderApp(require('./containers/App').default)
+  module.hot.accept('./containers/Root.js', () => {
+    renderApp(require('./containers/Root').default)
   })
 }
 

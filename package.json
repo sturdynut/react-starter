@@ -39,8 +39,16 @@
   },
   "dependencies": {
     "aphrodite": "^1.1.0",
+    "humps": "^1.1.0",
+    "lodash": "^4.16.1",
+    "normalizr": "3.0.0",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.3",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0",
+    "react-router": "^2.6.1",
+    "react-router-redux": "^4.0.5"
   },
   "devDependencies": {
     "babel-core": "6.13.2",
@@ -79,6 +87,9 @@
     "opt-cli": "1.5.1",
     "progress-bar-webpack-plugin": "1.9.3",
     "react-hot-loader": "3.0.0-beta.6",
+    "redux-devtools": "^3.3.2",
+    "redux-devtools-dock-monitor": "^1.1.1",
+    "redux-devtools-log-monitor": "^1.0.11",
     "rimraf": "2.5.4",
     "style-loader": "^0.13.2",
     "surge": "0.18.0",

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * style-loader
 * HMR updates
 * eslint-loader
+* redux, devtools and routing
 
 ## 0.0.1 - 2017-03-03
 ### Added
