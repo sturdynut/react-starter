@@ -1,36 +1,25 @@
-import {install as offlineInstall} from 'offline-plugin/runtime'
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
-import App from './containers/App';
-import './index.css';
+import React from 'react' // eslint-disable-line no-unused-vars
+import { render } from 'react-dom'
+import { AppContainer } from 'react-hot-loader'  // eslint-disable-line no-unused-vars
+import App from './containers/App'
 
-const render = (Component) => {
-  ReactDOM.render(
+const renderApp = (Component) => {
+  render(
     <AppContainer>
       <Component />
     </AppContainer>,
     document.getElementById('appRoot')
-  );
+  )
 }
 
-render(App)
+renderApp(App)
 
-const reloading = document.readyState === 'complete'
 if (module.hot) {
-  const appComponentPath = './containers/App';
-  module.hot.accept(appComponentPath, () => { render(App) })
-
-  if (!reloading) {
-    bootstrap()
-  }
-}
-else {
-  bootstrap()
+  module.hot.accept('./containers/App.js', () => {
+    renderApp(require('./containers/App').default)
+  })
 }
 
-function bootstrap () {
-  if (process.env.NODE_ENV === 'production') {
-    offlineInstall()
-  }
+if (process.env.NODE_ENV === 'production') {
+  require('offline-plugin/runtime').install()
 }

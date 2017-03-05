@@ -11,47 +11,59 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 module.exports = env => {
   const {ifProd, ifNotProd, ifDev} = getIfUtils(env)
 
-  const entry = removeEmpty([
-    ...ifDev([
-      'react-hot-loader/patch',
-    ], []),
-    './index'
-  ])
+  const entry = {
+    main: './index',
+    vendor: ['normalize.css']
+  }
 
+  if (env.dev) {
+     entry.main = [
+       'react-hot-loader/patch',
+        'webpack-dev-server/client?http://localhost:8080',
+        'webpack/hot/only-dev-server',
+        './index'
+      ]
+  }
+  
   const loaders = [
     {
-      test: /\.js$/, 
-      loaders: ['babel-loader'], 
+      test: /\.jsx?$/,
+      enforce: 'pre',
+      exclude: /node_modules/,
+      use: 'eslint-loader'
+    },
+    {
+      test: /\.jsx?$/, 
+      use: 'babel-loader', 
       exclude: /node_modules/
     },
     {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract({
-        fallbackLoader: 'style-loader',
-        loader: 'css-loader',
-      })
-    },
+      use: [
+        'style-loader',
+        'css-loader?modules'
+      ]
+    }
   ]
 
   const plugins = removeEmpty([
     ...ifDev([
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin(),
       new webpack.NamedModulesPlugin(),
-      new ExtractTextPlugin('styles.[name].css')
+      new webpack.NoEmitOnErrorsPlugin()
     ], []),
     ...ifProd([
       new InlineManifestWebpackPlugin(),
       new webpack.optimize.CommonsChunkPlugin({
         names: ['vendor', 'manifest'],
       }),
-      new ExtractTextPlugin('styles.[name].[chunkhash].css')
+      new OfflinePlugin(),
     ], []),
+    new ExtractTextPlugin(ifProd('styles.[name].[chunkhash].css', 'styles.[name].css')),
     new ProgressBarPlugin(),
     new HtmlWebpackPlugin({
       template: './index.html'
     }),
-    new OfflinePlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: ifProd('"production"', '"development"')
@@ -62,17 +74,25 @@ module.exports = env => {
   const config = {
     context: resolve('src'),
     resolve: {
-      extensions: ['.js', '.json', '.jsx', '.css']
+      extensions: ['.js', '.json', '.jsx']
     },
     entry: entry,
     output: {
       filename: ifProd('bundle.[name].[chunkhash].js', 'bundle.[name].js'),
       path: resolve('dist'),
+      publicPath: '/',
       pathinfo: ifNotProd(),
     },
     devtool: ifProd('source-map', 'eval'),
+    devServer: {
+      hot: true,
+      historyApiFallback: true,
+      contentBase: resolve(__dirname, 'dist'),
+      publicPath: '/',
+      port: 8080
+    },
     module: {
-      loaders: loaders
+      rules: loaders
     },
     plugins: plugins
   }
