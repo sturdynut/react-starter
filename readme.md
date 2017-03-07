@@ -87,6 +87,12 @@ Linting is setup using the [eslint](https://github.com/eslint/eslint), you can c
 
 *Configuration* - To deploy you will need to update the `config/surge` file with your email, token and surge domain.
 
+## TODO:
+
+* Add React Router 4
+  * https://github.com/ReactTraining/react-router/blob/v4/README.md
+  * https://reacttraining.com/react-router/examples
+
 ## Thanks
 
 * [https://github.com/kentcdodds/es6-todomvc]((https://github.com/kentcdodds/es6-todomvc)) 🙏
