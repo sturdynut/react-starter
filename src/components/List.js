@@ -1,4 +1,26 @@
 import React, { Component, PropTypes } from 'react' // eslint-disable-line no-unused-vars
+import { StyleSheet, css } from 'aphrodite'
+import * as Colors from '../styles/base'
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: Colors.primaryColor,
+    width: '100%',
+    borderStyle: 'none',
+    height: '50px',
+    color: Colors.indigo,
+    cursore: 'pointer'
+  },
+  loading: {
+    position: 'fixed',
+    bottom: '0',
+    left: '0',
+    right: '0',
+    textAlign: 'center',
+    padding: '20px',
+    backgroundColor: Colors.green
+  }
+})
 
 export default class List extends Component {
   static propTypes = {
@@ -19,7 +41,7 @@ export default class List extends Component {
   renderLoadMore () {
     const { isFetching, onLoadMoreClick } = this.props
     return (
-      <button style={{ fontSize: '150%' }}
+      <button className={css(styles.button)}
               onClick={onLoadMoreClick}
               disabled={isFetching}>
         {isFetching ? 'Loading...' : 'Load More'}
@@ -35,12 +57,12 @@ export default class List extends Component {
 
     const isEmpty = items.length === 0
     if (isEmpty && isFetching) {
-      return <h2><i>{loadingLabel}</i></h2>
+      return <div className={css(styles.loading)}>{loadingLabel}</div>
     }
 
     const isLastPage = !nextPageUrl
     if (isEmpty && isLastPage) {
-      return <h1><i>Nothing here!</i></h1>
+      return <div className={css(styles.loading)}>Nothing here!</div>
     }
 
     return (

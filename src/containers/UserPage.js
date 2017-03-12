@@ -5,6 +5,13 @@ import User from '../components/User' // eslint-disable-line no-unused-vars
 import Repo from '../components/Repo' // eslint-disable-line no-unused-vars
 import List from '../components/List' // eslint-disable-line no-unused-vars
 import zip from 'lodash/zip'
+import { StyleSheet, css } from 'aphrodite'
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex'
+  }
+})
 
 const loadData = ({ login, loadUser, loadStarred }) => {
   loadUser(login, [ 'name' ])
@@ -48,14 +55,13 @@ class UserPage extends Component {
   render () {
     const { user, login } = this.props
     if (!user) {
-      return <h1><i>Loading {login}{"'s profile..."}</i></h1>
+      return <div className={css(styles.loading)}>Loading {login}{"'s profile..."}</div>
     }
 
     const { starredRepos, starredRepoOwners, starredPagination } = this.props
     return (
-      <div>
+      <div className={css(styles.container)}>
         <User user={user} />
-        <hr />
         <List renderItem={this.renderRepo}
               items={zip(starredRepos, starredRepoOwners)}
               onLoadMoreClick={this.handleLoadMoreClick}

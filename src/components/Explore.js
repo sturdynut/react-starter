@@ -1,6 +1,23 @@
 import React, { Component, PropTypes } from 'react'  // eslint-disable-line no-unused-vars
+import { StyleSheet, css } from 'aphrodite'
 
-const GITHUB_REPO = 'https://github.com/reactjs/redux'
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    width: '100%'
+  },
+  input: {
+    flex: 1,
+    height: '50px',
+    padding: '0 10px'
+  },
+  button: {
+    width: '50px',
+    backgroundColor: '#2ecc71',
+    borderStyle: 'none',
+    color: '#fff'
+  }
+})
 
 export default class Explore extends Component {
   static propTypes = {
@@ -37,21 +54,17 @@ export default class Explore extends Component {
 
   render () {
     return (
-      <div>
-        <p>Type a username or repo full name and hit 'Go':</p>
+      <div className={css(styles.container)}>
         <input size="45"
-               ref="input"
-               defaultValue={this.props.value}
-               onKeyUp={this.handleKeyUp} />
-        <button onClick={this.handleGoClick}>
-          Go!
+          placeholder='Enter GitHub user name or repo'
+          ref="input"
+          className={css(styles.input)}
+          defaultValue={this.props.value}
+          onKeyUp={this.handleKeyUp} />
+        <button onClick={this.handleGoClick}
+          className={css(styles.button)}>
+          GO
         </button>
-        <p>
-          Code on <a href={GITHUB_REPO} target="_blank">Github</a>.
-        </p>
-        <p>
-          Move the DevTools with Ctrl+W or hide them with Ctrl+H.
-        </p>
       </div>
     )
   }

@@ -4,6 +4,20 @@ import { loadRepo, loadStargazers } from '../actions'
 import Repo from '../components/Repo' // eslint-disable-line no-unused-vars
 import User from '../components/User' // eslint-disable-line no-unused-vars
 import List from '../components/List' // eslint-disable-line no-unused-vars
+import { StyleSheet, css } from 'aphrodite'
+import * as Colors from '../styles/base'
+
+const styles = StyleSheet.create({
+  loading: {
+    position: 'fixed',
+    bottom: '0',
+    left: '0',
+    right: '0',
+    textAlign: 'center',
+    padding: '20px',
+    backgroundColor: Colors.green
+  }
+})
 
 const loadData = props => {
   const { fullName } = props
@@ -44,7 +58,7 @@ class RepoPage extends Component {
   render () {
     const { repo, owner, name } = this.props
     if (!repo || !owner) {
-      return <h1><i>Loading {name} details...</i></h1>
+      return <div className={css(styles.loading)}>Loading {name} details...</div>
     }
 
     const { stargazers, stargazersPagination } = this.props
@@ -52,7 +66,6 @@ class RepoPage extends Component {
       <div>
         <Repo repo={repo}
               owner={owner} />
-        <hr />
         <List renderItem={this.renderUser}
               items={stargazers}
               onLoadMoreClick={this.handleLoadMoreClick}

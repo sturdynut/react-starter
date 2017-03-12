@@ -1,5 +1,5 @@
 // Color palette
-const [
+export const [
   grey,
   black, // eslint-disable-line no-unused-vars
   white, // eslint-disable-line no-unused-vars
@@ -23,10 +23,5 @@ const [
   '#9b59b6'
 ]
 
-const primaryColor = yellow
-const secondaryColor = grey
-
-export default {
-  primaryColor,
-  secondaryColor
-}
+export const primaryColor = yellow
+export const secondaryColor = grey

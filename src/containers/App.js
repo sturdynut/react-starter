@@ -2,18 +2,28 @@ import React, { Component, PropTypes } from 'react' // eslint-disable-line no-un
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import { StyleSheet, css } from 'aphrodite'
-import { Colors } from '../styles/base'
+import * as Colors from '../styles/base'
 import Explore from '../components/Explore'  // eslint-disable-line no-unused-vars
 import { resetErrorMessage } from '../actions'
 
 const styles = StyleSheet.create({
   app: {
-    height: '100vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    minHeight: '100vh',
     backgroundColor: Colors.secondaryColor,
-    color: Colors.primaryColor
+    color: Colors.white
+  },
+  error: {
+    backgroundColor: Colors.red,
+    padding: '20px',
+    display: 'flex',
+    alignItems: 'center',
+    margin: '0'
+  },
+  errorLink: {
+    color: Colors.white,
+    padding: '0 3px',
+    fontSize: '0.8em',
+    marginLeft: 'auto'
   }
 })
 
@@ -41,15 +51,14 @@ class App extends Component {
     if (!errorMessage) {
       return null
     }
-
     return (
-      <p style={{ backgroundColor: '#e99', padding: 10 }}>
+      <p className={css(styles.error)}>
         <b>{errorMessage}</b>
-        {' '}
-        (<a href="#"
-            onClick={this.handleDismissClick}>
+        <a href="#"
+          className={css(styles.errorLink)}
+          onClick={this.handleDismissClick}>
           Dismiss
-        </a>)
+        </a>
       </p>
     )
   }
@@ -60,7 +69,6 @@ class App extends Component {
       <div className={css(styles.app)}>
         <Explore value={inputValue}
                  onChange={this.handleChange} />
-        <hr />
         {this.renderErrorMessage()}
         {children}
       </div>
